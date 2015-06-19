@@ -15,6 +15,9 @@
 \renewcommand{\footrulewidth}{0pt}  % 0pt hides the footer line, xpt will create a footer line x pt size
 \graphicspath{{images/}}
 
+% custom code snippet formatting
+\usepackage{listings}
+
 \begin{document}
 \begin{titlepage}
     \begin{center}
@@ -92,21 +95,51 @@ Cross-Site Scripting is a vulnerability that doesn't sanitize user input properl
 \subsection{How to mitigate Cross-Site Scripting}
 \begin{itemize}
     \item The most important way to prevent XSS attacks is to perform secure input handling.
-    \begin{itemize}
-        \item Most of the time, encoding should be performed whenever user input happens
-        \item In some cases, encoding has to be replaced by or complemented with validation
-        \item Secure input handling has to take into account which context of a page the user input is inserted into
-        \item To prevent all types of XSS attacks, secure input handling has to be performed in both client-side and server-side code
-    \end{itemize}
-\item Content Security Policy provides an additional layer of defense for when secure input handling fails
+        \begin{itemize}
+            \item Most of the time, encoding should be performed whenever user input happens
+            \item In some cases, encoding has to be replaced by or complemented with validation
+            \item Secure input handling has to take into account which context of a page the user input is inserted into
+            \item To prevent all types of XSS attacks, secure input handling has to be performed in both client-side and server-side code
+        \end{itemize}
+    \item Content Security Policy provides an additional layer of defense for when secure input handling fails
 \end{itemize}
 \newpage
 
+% ---------------------------Click jacking-----------------------------------%
 \section{Clickjacking}
 \subsection{What is Clickjacking?}
-OWASP gives a good example of what click jacking is...
+OWASP gives a good example of what click jacking is:
 
+imagine an attacker who builds a web site that has a button on it that says "click here for a free iPod". However, on top of that web page, the attacker has loaded an iframe with your mail account, and lined up exactly the "delete all messages" button directly on top of the "free iPod" button. The victim tries to click on the "free iPod" button but instead actually clicked on the invisible "delete all messages" button. In essence, the attacker has "hijacked" the user's click, hence the name "Clickjacking".  \newline
 
+\textbf{Basic ingredients to prepare for a clickjacking attack are}: \newline
+\line(1,0){300} \\
+
+\begin{description}
+    \item[Iframe] This is a frame in the HTML that frames a webpage in it
+    \item[Z-Index] Decides the iframe index in the stack
+    \item[Opacity] Makes the iframe transparent
+    \item[Position:Absolute] Lines up the iframe with the dummy page
+\end{description}
+
+\subsection{How to mitigate against it?}
+
+\begin{itemize}
+    \item Sending the proper X-Frame-Options HTTP response headers that instruct the browser to not allow framing from other domains
+    \item Employing defensive code in the UI to ensure that the current frame is the most top level window
+        \begin{itemize}
+            \item Frame-breaker
+                By inserting this script into the header of your site, it is an easy way to break the iframe.
+
+                \begin{lstlisting}
+                <script>
+                if (top != self){
+                    top.location = self.location;
+                }
+                </script>
+                \end{lstlisting}
+        \end{itemize}
+\end{itemize}
 \newpage
 
 
