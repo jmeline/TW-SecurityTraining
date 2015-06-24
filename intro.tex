@@ -142,7 +142,29 @@ imagine an attacker who builds a web site that has a button on it that says "cli
 \end{itemize}
 \newpage
 
+\section{Authentication}
+All approaches for human authentication rely on at least one of the following
+\begin{description}
+    \item[Something you know (eg. a password)] This is the most common kind of authentication used for humans. We use passwords every day to access our systems. Unfortunately, something that you know can become something you just forgot. And if you write it down, then other people might find it.
+    \item [Something you have (eg. a smart card)] This form of human authentication removes the problem of forgetting something you know, but some object now must be with you any time you want to be authenticated. And such an object might be stolen and then becomes something the attacker has.
+    \item [Something you are (eg. a fingerprint)] Base authentication on something intrinsic to the principal being authenticated. It's much harder to lose a fingerprint than a wallet. Unfortunately, biometric sensors are fairly expensive and (at present) not very accurate.
+\end{description}
 
+\subsection{Account Lockout}
+
+In an account lockout attack, an attacker attempts to lock out user accounts by purposely failing the authentication process as many times as needed to trigger the account lockout functionality. This in turn prevents even the valid user from obtaining access to their account. For example, if an account lockout policy states that users are locked out of their accounts after three failed login attempts, an attacker can lock out accounts by deliberately sending an invalid password three times. On a large scale, this attack can be used as one method in launching a denial of service attack on many accounts. The impact of such an attack is compounded when there is a significant amount of work required to unlock the accounts to allow users to attempt to authenticate again.
+
+\subsubsection{Ebay Account Lockout Attack}
+At one time, eBay displayed the user-id of the highest bidder for a given auction. In the final minutes of the auction, an attacker who was wanting to outbid the current highest bidder could attempt to authenticate three times using the targeted account. After three deliberately incorrect authentication attempts, eBay password throttling would lock out the highest bidder's account for a certain amount of time. An attacker could then make their own bid and the legitimate user would not have a chance to place a counter-bid because they would be locked out of their account.
+
+\subsubsection{Mitigation Strategies}
+Brute force attacks are surprisingly difficult to completely mitigate. Careful design and implementation will assist in helping to minimize these attacks.
+\begin{itemize}
+    \item Since passwords are not always the best option. Having a public-private key setup (Something you have) can help in some circumstances
+    \item Time-increasing failed login. For example, after 3 unsuccessful logins, you could block the login for this account for 30 seconds. After the 30 seconds, if the 4th login is still unsuccessful, you stop it for 1 minute, then 5m, and you increase more and more
+\end{itemize}
+\newpage
+\section{Password History}
 
 \end{document}
 
