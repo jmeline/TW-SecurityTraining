@@ -47,12 +47,38 @@ Some useful terms to know:
 \begin{description}
     \item[OWASP] The Open Web Application Security Project. Is an online community dedicated to web application security. Participants include corporations, educational organizations, and individuals.
 
+    \item[PHI] Protected Health Information
+    \begin{enumerate}
+        \item The individual's past, present, or future physical or mental health or condition.
+        \item The Provision of health care to the individual, or
+        \item the past, present, or future payment for the provision of health care to the individual,
+        \item the individual's identity or for which there is a reasonable basis to believe it can be used to identify the individual
+    \end{enumerate}
+    \item[PII] Personal Identifiable Information
+    \begin{enumerate}
+        \item Social Security Number
+        \item Driver's license or California Identification Card Number
+        \item Account number, credit or debit card number, in combination with any required security code, access code, or password that would permit access to an individual's financial account
+    \end{enumerate}
+
 \end{description}
 
 \newpage
 
 % ---------------------------SQL Injection------------------------------------%
-\section{SQL Injection}
+\section{SQL Injection A1}
+
+\subsection{What is SQL Injection}
+A simple example could look like this: `http://mysite.com/color?colorid=4`
+It doesn't matter what site it is, this site has a path called "color" with a query string called "colorid" with a value of 4. The query probably looks like something like this. "select * from color where colorid=4"
+
+"4" is data. It is untrusted. \ it comes in via the url. Changing "4" to "5" will give you a different color
+
+Internal errors can give hackers an idea of what is allowed in your database or not.
+
+\subsection{Why SQL Injection Matters}
+
+Discoverability EASY, Prevalence COMMON, Exploitability EASY, Impact SEVERE
 
 Further readings:
 
@@ -66,7 +92,19 @@ Example of attack
 \begin{itemize}
     \item \href{http://www.w3schools.com/sql/sql_injection.asp}{A simple example of SQLi}
     \item \href{https://www.hackthissite.org/missions/realistic/4/}{A more realistic example}
+    \item \href{https://www.hackthissite.org/missions/realistic/2/}{Another realistic example}
 \end{itemize}
+
+In the first hackthissite example, we first have to look everywhere in the site.
+\begin{description}
+    \item[Investigate the Site]
+        \begin{description}
+            \item[Source Code] You have to dig through the code. A lot of modern sites will have tests to stop sqlinjection. But you still need to watch out for vulnerabilities. By looking through the source code, you can sometimes find some pretty serious issues. The input is clearly visible. The first step is to attempt to get out of the string. Try registering an email address contatining apostrophes, both single and double. By trying different combinations, we get a different type of message. "Error inserting into table "email"! Email not Valid. Please contact an administrator of Fischer's
+            \item[Check the other pages] Looking at the other products, both are using products.php with the category ID as an argument. You can change the argument to be ?category=2 or category=1 to get a combination of both pages on the same page.
+
+        \end{description}
+\end{description}
+
 
 Lets say that a form is asking for user credentials and enter "Tom," well, that is fine and all. If you enter Tom" you're going to have some vulunerability concerns. You can do Tom"; DROP ALL DATABASES; to do some serious damage. To mitigate this attack, you can simply put a slash before any quotation mark. This forces SQL to read it as a quotation mark and not a continuation of a command.
 
@@ -81,6 +119,9 @@ Links to useful sites
 
 % ---------------------------Cross Site Request Forgery ------------------------------------%
 \section{Cross Site Request Forgery}
+\subsection{What is Cross-Site Request Forgery}
+A CSRF attack forces a logged-on victim's browser to send a forged HTTP request, including the victim's session cookie and any other automatically included authentication information, to a vulnerable web application. This allows the attacker to force the victim's broswer to generate requests the vulnerable application thinks are legitimate requests from the victim.
+
 \newpage
 
 
@@ -116,7 +157,7 @@ Cross-Site Scripting is a vulnerability that doesn't sanitize user input properl
 \subsection{What is Clickjacking?}
 OWASP gives a good example of what click jacking is:
 
-imagine an attacker who builds a web site that has a button on it that says "click here for a free iPod". However, on top of that web page, the attacker has loaded an iframe with your mail account, and lined up exactly the "delete all messages" button directly on top of the "free iPod" button. The victim tries to click on the "free iPod" button but instead actually clicked on the invisible "delete all messages" button. In essence, the attacker has "hijacked" the user's click, hence the name "Clickjacking".  \newline
+Imagine an attacker who builds a web site that has a button on it that says "click here for a free iPod". However, on top of that web page, the attacker has loaded an iframe with your mail account, and lined up exactly the "delete all messages" button directly on top of the "free iPod" button. The victim tries to click on the "free iPod" button but instead actually clicked on the invisible "delete all messages" button. In essence, the attacker has "hijacked" the user's click, hence the name "Clickjacking".  \newline
 \begin{center}
 \textbf{Basic ingredients to prepare for a clickjacking attack are}: \newline
 \line(1,0){300} \\
@@ -173,9 +214,15 @@ Brute force attacks are surprisingly difficult to completely mitigate. Careful d
     \item Time-increasing failed login. For example, after 3 unsuccessful logins, you could block the login for this account for 30 seconds. After the 30 seconds, if the 4th login is still unsuccessful, you stop it for 1 minute, then 5m, and you increase more and more
 \end{itemize}
 
-\subsection{Creating Strong Passwords}
-\href{http://blog.codinghorror.com/your-password-is-too-damn-short/}{Your password is too short}
+\subsection{Passwords and Hashes}
+\includegraphics[width=\textwidth]{password_strength}
+Sources:
+\begin{itemize}
+    \item \href{http://www.unixmen.com/john-the-ripper-the-fast-multi-platform-password-cracking-tool/}{John the ripper}
+    \item \href{http://blog.codinghorror.com/your-password-is-too-damn-short/}{Your password is too short}
+    \item \href{http://null-byte.wonderhowto.com/how-to/hack-like-pro-crack-passwords-part-1-principles-technologies-0156136/}{cracking passwords like a pro}
 
+\end{itemize}
 \subsection{Password History}
 
 It is typical in a company to require its employees to have a new password every 6 - 12 months. On top of that, there can be time restrictions on the previous passwords so that even if old passwords were compromised, attackers wouldn't be able to brute force their way through a secure network.
@@ -185,7 +232,24 @@ It is typical in a company to require its employees to have a new password every
     \item [Never store passwords as plaintext] Store the hashes, never the actual passwords
     \item [Add a long, unique random salt to each password you store] The point of a \textbf{Salt} is to make each password unique and long enough that brute force attacks are a waste of time. This allows the password to be immune to rainbow table attack.
     \item [Don't invent your own "clever" password storage scheme] Use something that has been thoroughly tested.
-    \item [Use a cryptographically secure hash] If you use MD5, i'll hurt you. SHA-1 is another one to avoid. These don't add any salt to the passwords
+    \item [Use a cryptographically secure hash] SHA-1 and MD5 are ones to avoid. These don't add any salt to the passwords
 \end{description}
+
+\subsection{Hashes}
+\subsubsection{Hash Anatomy}
+a Hash is made up of multiple parts. This allows you to determine the settings used to create the hash, thereby allowing you to validate against it with needing any additional information.
+\newline
+\newline
+\includegraphics[width=\textwidth]{hash-anatomy}
+
+\subsubsection{Cracking Hashes}
+Depending on the operating system that you are on, you can find a tool to crack passwords.
+
+\begin{description}
+    \item[Windows] Cain and Abel: Strictly for Windows, it can crack numerous hash types including NTLM, NTLMv2, MD5, wireless, Oracle, MySQL, SQL Server, SHA1, SHA2, Cisco, VoIP, ando others
+    \item[Linux] John the ripper
+    \item[OSX] Various tools are available. John the ripper,
+\end{description}
+
 \end{document}
 
