@@ -95,14 +95,15 @@ Example of attack
     \item \href{https://www.hackthissite.org/missions/realistic/2/}{Another realistic example}
 \end{itemize}
 
-In the first hackthissite example, we first have to look everywhere in the site.
+\subsection{Example from HackThisSite}
+If you're going to prevent it, You have to know how to \textbf{cause} it.
+\newline
+\newline
+\textbf{How to get started}
 \begin{description}
-    \item[Investigate the Site]
-        \begin{description}
-            \item[Source Code] You have to dig through the code. A lot of modern sites will have tests to stop sqlinjection. But you still need to watch out for vulnerabilities. By looking through the source code, you can sometimes find some pretty serious issues. The input is clearly visible. The first step is to attempt to get out of the string. Try registering an email address contatining apostrophes, both single and double. By trying different combinations, we get a different type of message. "Error inserting into table "email"! Email not Valid. Please contact an administrator of Fischer's
-            \item[Check the other pages] Looking at the other products, both are using products.php with the category ID as an argument. You can change the argument to be ?category=2 or category=1 to get a combination of both pages on the same page.
-
-        \end{description}
+   \item[Source Code] You have to dig through the code. A lot of modern sites will have tests to stop sqlinjection. But you still need to watch out for vulnerabilities. By looking through the source code, you can sometimes find some pretty serious issues. The input is clearly visible. The first step is to attempt to get out of the string. Try registering an email address contatining apostrophes, both single and double. By trying different combinations, we get a different type of message. "Error inserting into table "email"! Email not Valid. Please contact an administrator of Fischer's
+    \item[Check the other pages] Looking at the other products, both are using products.php with the category ID as an argument. You can change the argument to be \?category=2 or category=1 to get a combination of both pages on the same page.
+    \item[Try different things]
 \end{description}
 
 
