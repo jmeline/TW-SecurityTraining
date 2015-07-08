@@ -236,6 +236,14 @@ It is typical in a company to require its employees to have a new password every
 \end{description}
 
 \subsection{Hashes}
+Hashes are a one-way function which take an input string and turns it into a value called a Digest. They are considered practically impossible to invert.
+
+\begin{itemize}
+    \item It is easy to compute the hash value for any given message
+    \item It is infeasible to generate a message from its hash
+    \item It is infeasible to modify a message without changing the hash
+    \item It is infeasible to find two different messages with the same hash
+\end{itemize}
 \subsubsection{Hash Anatomy}
 a Hash is made up of multiple parts. This allows you to determine the settings used to create the hash, thereby allowing you to validate against it with needing any additional information.
 \newline
@@ -247,9 +255,10 @@ Depending on the operating system that you are on, you can find a tool to crack 
 
 \begin{description}
     \item[Windows] Cain and Abel: Strictly for Windows, it can crack numerous hash types including NTLM, NTLMv2, MD5, wireless, Oracle, MySQL, SQL Server, SHA1, SHA2, Cisco, VoIP, ando others
-    \item[Linux] John the ripper
-    \item[OSX] Various tools are available. John the ripper,
+    \item[Linux] John the ripper: Powerful, lack of gui. Has an unique password cracking strategy. First, it attempts a dictionary attack, if that fails, it then attempts to use combined dictionary words, then tries a hybrid attack of dictionary words with special characters and numbers, and only if all those fail will it resort to a brute force method. Has support for computing over a GPU with CUDA and OpenMPI
+    \item[OSX] Various tools are available.
 \end{description}
 
+\textbf{EXAMPLE!}
 \end{document}
 
