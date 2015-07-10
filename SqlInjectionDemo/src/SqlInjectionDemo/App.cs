@@ -5,6 +5,7 @@ using System.Web;
 using FubuMVC.Core;
 using FubuMVC.StructureMap;
 using StructureMap.Configuration.DSL;
+using System.Data.SqlClient;
 
 namespace SqlInjectionDemo
 {
@@ -31,6 +32,15 @@ namespace SqlInjectionDemo
     {
         public MyStructureMapRegistry()
         {
+            IncludeRegistry<SqlServerRegistry>();
+        }
+    }
+
+    public class SqlServerRegistry : Registry
+    {
+        public SqlServerRegistry()
+        {
+            var myConnection = new SqlConnection("user id=");
         }
     }
 }

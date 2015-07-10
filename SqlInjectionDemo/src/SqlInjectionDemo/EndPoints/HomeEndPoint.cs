@@ -5,6 +5,7 @@ using System.Web;
 
 namespace SqlInjectionDemo.EndPoints
 {
+    // Endpoint... not EndPoint
     public class HomeEndpoint
     {
         public HomeViewModel Index(HomeInputModel model)
@@ -12,17 +13,24 @@ namespace SqlInjectionDemo.EndPoints
             return new HomeViewModel();
         }
 
-        public HomeViewModel NewIndex(HomeInputModel2 model)
+        public LoginViewModel post_login(LoginInputModel model)
         {
-            return new HomeViewModel();
+
+            return new LoginViewModel();
         }
     }
 
-    public class HomeInputModel
+    public class LoginInputModel
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
+
+    public class LoginViewModel
     {
     }
 
-    public class HomeInputModel2
+    public class HomeInputModel
     {
     }
 
