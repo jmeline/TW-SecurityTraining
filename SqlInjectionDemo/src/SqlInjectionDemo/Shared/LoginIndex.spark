@@ -1,0 +1,11 @@
+﻿<viewdata model="SqlInjectionDemo.EndPoints.LoginViewModel"/>
+<use master="Master"/>
+<div class="container">
+  <if condition="!String.IsNullOrEmpty(Model.Username)">
+    <p>Welcome, ${Model.Username}! </p>
+    <p> Your credentials are: ${Model.Firstname}, ${Model.Lastname}, ${Model.Password}</p>
+  </if>
+  <else>
+    <p>Sorry, invalid person credentials</p>
+  </else>
+</div>

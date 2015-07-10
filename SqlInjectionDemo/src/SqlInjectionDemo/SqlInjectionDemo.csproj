@@ -119,6 +119,7 @@
   <ItemGroup>
     <Content Include="Shared\HomeIndex.spark" />
     <Content Include="Shared\Master.spark" />
+    <Content Include="Shared\LoginIndex.spark" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -40,7 +40,6 @@ namespace SqlInjectionDemo
     {
         public SqlServerRegistry()
         {
-            var myConnection = new SqlConnection("user id=");
         }
     }
 }
