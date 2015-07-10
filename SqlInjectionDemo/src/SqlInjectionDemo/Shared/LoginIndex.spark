@@ -1,9 +1,27 @@
 ﻿<viewdata model="SqlInjectionDemo.EndPoints.LoginViewModel"/>
 <use master="Master"/>
 <div class="container">
-  <if condition="!String.IsNullOrEmpty(Model.Username)">
-    <p>Welcome, ${Model.Username}! </p>
-    <p> Your credentials are: ${Model.Firstname}, ${Model.Lastname}, ${Model.Password}</p>
+  <if condition="Model.Users != null" >
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>UserName</th>
+          <th>Password</th>
+          <th>FirstName</th>
+          <th>LastName</th>
+        </tr>
+      </thead>
+      <tbody>
+        <for each="var row in Model.Users">
+          <tr>
+            <td>${row.UserName}</td>
+            <td>${row.Password}</td>
+            <td>${row.FirstName}</td>
+            <td>${row.LastName}</td>
+          </tr>
+        </for>
+      </tbody>
+    </table>
   </if>
   <else>
     <p>Sorry, invalid person credentials</p>
